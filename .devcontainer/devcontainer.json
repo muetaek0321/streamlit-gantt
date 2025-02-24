@@ -14,5 +14,6 @@
 	],
 	"forwardPorts": [8000],
 	"remoteUser": "root",
-	"runArgs": ["--gpus", "all"]
+	"runArgs": ["--gpus", "all"],
+	"postCreateCommand": "uv sync --no-cache"
 }

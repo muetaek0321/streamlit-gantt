@@ -1,22 +1,13 @@
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
+# ベースイメージ（ここは自由に変更）
+FROM ubuntu:latest
 
-ENV ENVDIR="/app"
-ENV PATH="$ENVDIR/.venv/bin:$PATH"
-
-# Install system dependencies
+# 必要なソフトのインストール
 RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Install uv
+# uvのインストール
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-
-# Setup Python env
-WORKDIR $ENVDIR
-
-# 既存の設定ファイルを読み込む場合
-COPY pyproject.toml .python-version uv.lock $ENVDIR
-RUN uv sync --no-cache --frozen
 
 # Default command
 CMD ["/bin/bash"]
