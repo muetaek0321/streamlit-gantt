@@ -1,5 +1,5 @@
 {
-	"name": "uv",
+	"name": "streamlit-gantt",
 	"build": {
 	  "dockerfile": "../Dockerfile"
 	},
