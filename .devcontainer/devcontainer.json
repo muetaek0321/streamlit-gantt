@@ -10,7 +10,8 @@
 	  "ms-python.python",
 	  "kevinrose.vsc-python-indent",
 	  "mhutchie.git-graph",
-	  "eamodio.gitlens"
+	  "eamodio.gitlens",
+	  "grapecity.gc-excelviewer"
 	],
 	"forwardPorts": [8000],
 	"remoteUser": "root",
