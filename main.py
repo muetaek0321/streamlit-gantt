@@ -6,6 +6,13 @@ from modules.styles import HIDE_ST_STYLE
 from modules.create_ganttchart import create_ganttchart
 
 
+# ページのコンフィグ
+st.set_page_config(
+    page_title="タスク管理",
+    page_icon="🤔",
+    layout="wide"
+)
+
 # 定数
 STATE = st.session_state
 
