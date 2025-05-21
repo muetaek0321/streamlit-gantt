@@ -4,7 +4,7 @@ import streamlit as st
 from streamlit_extras.stylable_container import stylable_container
 import pandas as pd
 
-from modules.styles import ADD_BUTTON_STYLE
+from modules.styles import ADD_BUTTON_STYLE, DELETE_BUTTON_STYLE
 
 
 # 定数
@@ -58,8 +58,48 @@ def add_task_dialog(
             )
             task_df = pd.concat([STATE.tasks_df, add_task_info])
             task_df.to_csv(data_path, encoding="cp932", index=False)
-            # session_stateのtask_dfも更新
-            STATE.tasks_df = task_df
+            # session_stateのtask_dfの更新のため、一旦削除
+            del STATE.tasks_df
+            
+            st.rerun()
+    with col2:
+        if st.button("キャンセル", use_container_width=True):
+            st.rerun()
+            
+
+def delete_task_button(
+    data_path: str | Path,
+) -> None:
+    """タスク登録の処理をするボタン
+    """
+    # ボタンのスタイルの設定
+    with stylable_container("delete_button", DELETE_BUTTON_STYLE):
+        add_button_click = st.button("削除", icon="🗑️", disabled=(len(STATE.select)==0))
+    
+    # ボタンが押された時の処理
+    if add_button_click:
+        delete_task_dialog(data_path, STATE.select[0])
+        
+        
+@st.dialog("タスク削除")
+def delete_task_dialog(
+    data_path: str | Path,
+    target_idx: int
+) -> None:
+    """タスクを登録するダイアログ
+    """
+    st.text("選択したタスクを削除しますか？")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("削除", type="primary", use_container_width=True):
+            # csvから削除し保存
+            task_df = STATE.tasks_df.drop(target_idx)
+            task_df.to_csv(data_path, encoding="cp932", index=False)
+            
+            # session_stateのtask_dfの更新のため、一旦削除
+            del STATE.tasks_df
+            del STATE.select
             
             st.rerun()
     with col2:

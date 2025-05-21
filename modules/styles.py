@@ -21,6 +21,7 @@ button {
 DELETE_BUTTON_STYLE = """
 button {
     background-color: #FF0000;
-    color: black;
+    color: white;
+    margin: 1em;
 }
 """
